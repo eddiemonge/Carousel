@@ -51,7 +51,7 @@ $.fn.eddiesCarousel = function( options ) {
 
 	// Perform some magic on the container, like fix the height and width, empty it
 	// and set some css to allow the images to move
-    this
+	this
 		.height( tHeight )
 		.width( tWidth )
 		.empty()
@@ -75,5 +75,8 @@ $.fn.eddiesCarousel = function( options ) {
 
 	// Set the initial timer, convert the jQuery collection to an array and run it
 	timer = setTimeout(function() { looper( $.makeArray(images) ); }, option.delay);
+	
+	// Return this so it maintains it chainability.
+	return this;
 };
 })(jQuery);
