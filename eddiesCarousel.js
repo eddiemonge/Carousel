@@ -1,29 +1,40 @@
 (function($) {
-$.fn.eddiesCarousel = function() {
-    var images = this.find('img'),
-        height = this.height();
+$.fn.eddiesCarousel = function( options ) {
+    var option = $.extend({
+			delay: 6000,
+			effect: 'slideIn',
+			speed: 1000
+		}, options),
+		iHTML = [],
+		images = this.find('img').detach(),
+		timer,
+		looper = function ( imgs ) {
+			$(imgs).last().fadeOut(option.speed, function(){
+				var $this = $(this);
+				imgs.unshift( imgs.pop() );
+				$this.prependTo( $this.parent() ).show();				
+				timer = setTimeout(function() { looper(imgs); }, option.delay);
+			});
+		};
 
-    images.detach();
+    this
+		.height( this.height() )
+		.width( this.width() )
+		.empty()
+		.css({
+			position: 'relative',
+			overflow: 'hidden'
+		});		
 
-    this.empty().css('position', 'relative').height( height );
-    
-    images
-        .css({
-            zIndex:1,
-            position: 'absolute',
-            top: 0,
-            left: 0
-        })
-        .first()
-            .css('z-index',2)
-            .show();
-    
-    images.first().delay(2000).fadeOut();
+	images
+		.css({
+			position: 'absolute',
+			top: 0,
+			left: 0
+		});
 
+	this.append(images);
 
-    this.append(images);
+	timer = setTimeout(function() { looper( $.makeArray(images) ); }, option.delay);
 };
-
 })(jQuery);
-
-$('#gallery-1').eddiesCarousel();
