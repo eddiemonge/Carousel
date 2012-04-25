@@ -1,6 +1,6 @@
 (function($) {
 $.fn.eddiesCarousel = function( options ) {
-	// Define some defaults for the plugin
+    // Define some defaults for the plugin
     var option = $.extend({
 			delay: 6000,
 			effect: 'slideUp',
